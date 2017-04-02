@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" href="css/app.css">
+  </head>
+  <body ng-app = 'itChallenges' ng-cloak>
+    <div ng-controller="mainController">
+        <div id="map" ng-controller="mainCtrl">
+            <ui-gmap-google-map center="map.center" zoom="map.zoom"></ui-gmap-google-map>
+        </div>
+    </div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMM7MME49FZ75uQ8QQCVa-EK8pZo2Xmoc"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-google-maps/dist/angular-google-maps.min.js"></script>
+    <script src="js/app2.js"></script>
+  </body>
+</html>
