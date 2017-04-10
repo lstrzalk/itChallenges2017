@@ -1,4 +1,7 @@
 var animationTime = 200
+$( "md-tab" ).mouseover(function() {
+  console.log("jestem")
+});
 $('#barTop').hover(function() {
     setTopEnter( $(this));
     setBottomEnter($("#barBottom"));

@@ -49,3 +49,7 @@ html, body {
     margin: 0;
     padding: 0;
 }
+.tab{
+    padding: 5px;
+    font-size: 150%;
+}

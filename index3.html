@@ -5,19 +5,28 @@
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
     <!-- STYLESHEETS -->
-    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
     <link rel="stylesheet" href="css/app.css"/>
   </head>
   <body ng-app="itChallenges" ng-controller="mainController" ng-cloak>
     <div id="map"></div>
     <div id = "barTop">
-        <md-tabs md-selected = "topSelected" md-autoselect md-dynamic-height md-stretch-tabs="always">
-            <md-tab ng-repeat="marker in markers" ng-if="topDisplay(marker)" label={{marker}}></md-tab>
+        <md-tabs md-selected = "topSelected" md-dynamic-height md-stretch-tabs="never">
+            <md-tab ng-repeat="marker in markers" ng-if="topDisplay($index)">
+                <span class = "tab">{{marker.name}}</span>
+                <md-icon class = "tab" ng-click="rename(marker)"  md-font-library="material-icons">edit</md-icon>
+                <md-icon class = "tab" ng-click="delete(marker)"  md-font-library="material-icons">delete</md-icon>
+            </md-tab>
         </md-tabs>
     </div>
     <div id = "barBottom">
-        <md-tabs md-selected = "bottomSelected" md-autoselect md-dynamic-height md-stretch-tabs="always">
-            <md-tab ng-repeat="marker in markers" ng-if="bottomDisplay(marker)" label={{marker}}></md-tab>
+        <md-tabs md-selected = "bottomSelected" md-dynamic-height md-stretch-tabs="never">
+            <md-tab ng-repeat="marker in markers" ng-if="bottomDisplay($index) ">
+                <span class = "tab">{{marker.name}}</span>
+                <md-icon class = "tab" ng-click="rename(marker)"  md-font-library="material-icons">edit</md-icon>
+                <md-icon class = "tab" ng-click="delete(marker)"  md-font-library="material-icons">delete</md-icon>
+            </md-tab>
         </md-tabs>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMM7MME49FZ75uQ8QQCVa-EK8pZo2Xmoc"></script>
