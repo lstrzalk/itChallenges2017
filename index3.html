@@ -13,8 +13,8 @@
     <div id="map"></div>
     <div id = "barTop">
         <md-tabs md-selected = "topSelected" md-dynamic-height md-stretch-tabs="never">
-            <md-tab ng-repeat="marker in markers" ng-if="topDisplay($index)">
-                <span class = "tab">{{marker.name}}</span>
+            <md-tab ng-repeat="marker in topEnv">
+                <span class = "tab">{{marker.name}}.{{marker.title}}</span>
                 <md-icon class = "tab" ng-click="rename(marker)"  md-font-library="material-icons">edit</md-icon>
                 <md-icon class = "tab" ng-click="delete(marker)"  md-font-library="material-icons">delete</md-icon>
             </md-tab>
@@ -22,8 +22,8 @@
     </div>
     <div id = "barBottom">
         <md-tabs md-selected = "bottomSelected" md-dynamic-height md-stretch-tabs="never">
-            <md-tab ng-repeat="marker in markers" ng-if="bottomDisplay($index) ">
-                <span class = "tab">{{marker.name}}</span>
+            <md-tab ng-repeat="marker in bottomEnv">
+                <span class = "tab">{{marker.name}}.{{marker.title}}</span>
                 <md-icon class = "tab" ng-click="rename(marker)"  md-font-library="material-icons">edit</md-icon>
                 <md-icon class = "tab" ng-click="delete(marker)"  md-font-library="material-icons">delete</md-icon>
             </md-tab>

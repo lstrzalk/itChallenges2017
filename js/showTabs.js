@@ -1,24 +1,36 @@
-var animationTime = 200
-$( "md-tab" ).mouseover(function() {
-  console.log("jestem")
+var animationTime = 200;
+var mouseEntered = false;
+$('#barTop').mouseenter(function() {
+    if(!mouseEntered){
+        mouseEntered = true;
+        setTopEnter( $(this));
+        setBottomEnter($("#barBottom"));
+        $("#map").animate({top: '48px',height: '-=96px'},animationTime)
+    }
 });
-$('#barTop').hover(function() {
-    setTopEnter( $(this));
-    setBottomEnter($("#barBottom"));
-    $("#map").animate({top: '48px',height: '-=96px'},animationTime)
-},function() {
-    setTopOut( $(this));
-    setBottomOut($("#barBottom"));
-    $("#map").animate({top: '0',height: '100%'},animationTime)
+$('#barTop').mouseleave(function() {
+    if(mouseEntered){
+        mouseEntered = false;
+        setTopOut( $(this));
+        setBottomOut($("#barBottom"));
+        $("#map").animate({top: '0',height: '100%'},animationTime)
+    }
 });
-$('#barBottom').hover(function() {
-    setBottomEnter( $(this));
-    setTopEnter($("#barTop"));
-    $("#map").animate({top: '48px',height: '-=96px'},animationTime)
-},function() {
-    setBottomOut( $(this));
-    setTopOut($("#barTop"));
-    $("#map").animate({top: '0',height: '100%'},animationTime)
+$('#barBottom').mouseenter(function() {
+    if(!mouseEntered){
+        mouseEntered = true;
+        setBottomEnter( $(this));
+        setTopEnter($("#barTop"));
+        $("#map").animate({top: '48px',height: '-=96px'},animationTime)
+    }
+});
+$('#barBottom').mouseleave(function() {
+    if(mouseEntered){
+        mouseEntered = false;
+        setBottomOut( $(this));
+        setTopOut($("#barTop"));
+        $("#map").animate({top: '0',height: '100%'},animationTime)
+    }
 });
 var setTopEnter = function(elem){
     elem.css({left:'0'});
