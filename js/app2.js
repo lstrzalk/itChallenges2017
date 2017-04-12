@@ -73,8 +73,6 @@ $mdThemingProvider.theme('default')
 
 app.controller('mainController', function($scope, $window, $mdDialog, Markers){
     $scope.markers = Markers.loadMarkers();
-    $scope.topEnv = Markers.loadMarkers();
-    $scope.bottomEnv = Markers.loadMarkers();   
     var cracov = new google.maps.LatLng(50.021, 19.885);
     $window.map = new google.maps.Map(document.getElementById('map'), {
         center: cracov,
@@ -98,12 +96,6 @@ app.controller('mainController', function($scope, $window, $mdDialog, Markers){
         .cancel('cancel');
         $mdDialog.show(confirm).then(function(result) {
             $scope.markers = Markers.update(marker, result);
-            if(findIndex($scope.topEnv, marker)>=0){
-                $scope.topEnv[findIndex($scope.topEnv, marker)].title = result;
-            }
-            if(findIndex($scope.bottomEnv, marker)>=0){
-                $scope.bottomEnv[findIndex($scope.bottomEnv, marker)].title = result;
-            }
             $scope.markersObjects[marker.name].title = result;
             $scope.markersObjects[marker.name].setMap(null);
             $scope.markersObjects[marker.name].setMap($window.map);
@@ -114,154 +106,6 @@ app.controller('mainController', function($scope, $window, $mdDialog, Markers){
         $scope.markersObjects[marker.name].setMap(null);
         delete $scope.markersObjects[marker.name];
         $scope.markers = Markers.deleteMarker(marker.name);
-        if(findIndex($scope.topEnv, marker)>=0){
-            $scope.topEnv.splice(findIndex($scope.topEnv, marker),1)
-        }
-        if(findIndex($scope.bottomEnv, marker)>=0){
-            $scope.bottomEnv.splice(findIndex($scope.bottomEnv, marker),1)
-        }
-    }
-    $scope.$watch("bottomSelected",  function(newValue, oldValue){
-        if(newValue != -1 && newValue != oldValue){
-            $scope.updateTop();
-        }
-    });
-    $scope.$watch("topSelected", function(newValue, oldValue){
-        if(newValue != -1 && newValue != oldValue){
-            $scope.updateBottom();
-        }
-    });
-    // $scope.updateBottom = function(){
-    //     if($scope.topSelected != null && $scope.topSelected != -1){
-    //         console.log("top after bottom change: "+$scope.topSelected)
-    //         var old;
-    //         if($scope.bottomSelected != null && $scope.bottomSelected != -1 && $scope.topSelected < $scope.bottomSelected){
-    //             // console.log($scope.bottomSelected)
-    //             old = $scope.bottomEnv[$scope.bottomSelected];
-    //         }
-    //         $scope.bottomEnv.splice(0, $scope.bottomEnv.length);
-    //         for(var i = 0; i < $scope.markers.length; i = i +1){
-    //             if($scope.markers[i].name != $scope.topEnv[$scope.topSelected].name){
-    //                 // console.log($scope.topEnv[$scope.topSelected].name)
-    //                 // console.log($scope.markers[i].name)
-    //                 $scope.bottomEnv.push($scope.markers[i]);
-    //                 // if(old != null && $scope.markers[i].name == old.name){
-    //                 //     console.log("bottom: "+old.name);
-    //                 //     console.log("bottom: "+$scope.markers[i].name)
-    //                 //     console.log("bottom: "+($scope.bottomEnv.length-1))
-    //                 //     $scope.bottomSelected = $scope.bottomEnv.length-1;
-    //                 // }
-    //             }
-    //         }
-    //         if(old != null && old.name != $scope.bottomEnv[$scope.bottomSelected].name){
-    //             console.log(old.name != $scope.bottomEnv[$scope.bottomSelected].name);
-    //             $scope.bottomSelected = findIndex($scope.bottomEnv, old);
-    //         }
-    //     }
-    // }
-    $scope.updateBottom = function(){
-        var top = $scope.topSelected
-        if(top != null && top != -1){
-            var bottom = $scope.bottomSelected
-            if(bottom != null && bottom != -1){
-                if(true){
-                    var oldBottom = $scope.bottomEnv[bottom].name;
-                    var oldTop = $scope.topEnv[top].name;
-                    var newBottomEnv = updateEnv(oldTop);
-                    var newSelectedBottom = findIndex(newBottomEnv, oldBottom);
-                    console.log(newSelectedBottom)
-                    console.log(oldBottom)
-                    console.log(newBottomEnv)
-                    var newTopEnv = updateEnv(newBottomEnv[newSelectedBottom].name);
-                    var newSelectedTop = findIndex(newTopEnv, oldTop);
-                    $scope.bottomEnv = newBottomEnv;
-                    $scope.topEnv = newTopEnv;
-                    $scope.bottomSelected = newSelectedBottom;
-                    $scope.topSelected = newSelectedTop;
-
-                }
-                // var oldVal = $scope.bottomEnv[bottom].name;
-                // var newEnv = updateEnv($scope.topEnv[top].name);
-                // var newSelected = findIndex(newEnv, oldVal);
-                // $scope.bottomEnv = newEnv;
-                // if(newSelected != bottom){
-                //     $scope.bottomSelected = newSelected;
-                // }
-            }else{
-                $scope.bottomEnv = updateEnv($scope.topEnv[top].name);
-            }
-        }
-    }
-    $scope.updateTop = function(){
-        var bottom = $scope.bottomSelected
-        if(bottom != null && bottom != -1){
-            var top = $scope.topSelected
-            if(top != null && top != -1){
-                if(true){
-                    var oldBottom = $scope.bottomEnv[bottom].name;
-                    var oldTop = $scope.topEnv[top].name;
-                    var newTopEnv = updateEnv(oldBottom);
-                    var newSelectedTop = findIndex(newTopEnv, oldTop);
-                    var newBottomEnv = updateEnv(newTopEnv[newSelectedTop].name);
-                    var newSelectedBottom = findIndex(newBottomEnv, oldBottom);
-                    $scope.topEnv = newTopEnv;
-                    $scope.bottomEnv = newBottomEnv;
-                    $scope.topSelected = newSelectedTop;
-                    $scope.bottomSelected = newSelectedBottom;
-
-                }
-                // var oldVal = $scope.topEnv[top].name;
-                // var newEnv = updateEnv($scope.bottomEnv[bottom].name);
-                // var newSelected = findIndex(newEnv, oldVal);
-                // $scope.topEnv = newEnv;
-                // if(newSelected != top){
-                //     $scope.topSelected = newSelected;
-                // }
-            }else{
-                $scope.topEnv = updateEnv($scope.bottomEnv[bottom].name);
-            }
-        }
-    }
-
-    // $scope.updateTop = function(){
-    //     if($scope.bottomSelected != null && $scope.bottomSelected != -1){
-    //         console.log("bottom after top change: "+$scope.bottomSelected)
-    //         var old;
-    //         if($scope.topSelected != null && $scope.topSelected != -1 && $scope.topSelected > $scope.bottomSelected){
-    //             // console.log($scope.topSelected)
-    //             old = $scope.topEnv[$scope.topSelected];
-    //         }
-    //         $scope.topEnv.splice(0, $scope.topEnv.length);
-    //         for(var i = 0; i < $scope.markers.length; i = i +1){
-    //             if($scope.markers[i].name != $scope.bottomEnv[$scope.bottomSelected].name){
-    //                 // console.log($scope.bottomEnv[$scope.bottomSelected].name)
-    //                 // console.log($scope.markers[i].name)
-    //                 $scope.topEnv.push($scope.markers[i])
-    //                 // if(old != null && $scope.markers[i].name == old.name && $scope.topSelected != null && $scope.topSelected != -1){
-    //                 //     console.log("top: "+old.name);
-    //                 //     console.log("top: "+$scope.markers[i].name)
-    //                 //     console.log("top: "+($scope.topEnv.length-1))
-    //                 //     $scope.topSelected = $scope.topEnv.length-1;
-    //                 // }
-    //             }
-    //         }
-    //         if(old != null && old.name != $scope.topEnv[$scope.topSelected].name){
-    //             console.log(old.name != $scope.topEnv[$scope.topSelected].name);
-    //             $scope.topSelected = findIndex($scope.topEnv, old);
-    //         }
-    //     }
-    // }
-    function updateEnv(oppositeName){
-        if(oppositeName == null){
-            console.log("NULL!!")
-        }
-        var env = [];
-        for(var i = 0; i < $scope.markers.length;i = i + 1){
-            if($scope.markers[i].name != oppositeName){
-                env.push($scope.markers[i]);
-            }
-        }
-        return env;
     }
 });
 
@@ -294,8 +138,6 @@ function placeMarker($scope, location, Markers) {
         map: map
     })
     $scope.markers = Markers.createMarker(marker.label, marker.title, location);
-    $scope.topEnv.push($scope.markers[$scope.markers.length-1])
-    $scope.bottomEnv.push($scope.markers[$scope.markers.length-1])
     marker.addListener('dblclick', function(){
         $scope.delete(Markers.getMarkerByName(this.label))
         $scope.$apply();

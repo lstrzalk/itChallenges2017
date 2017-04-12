@@ -56,5 +56,14 @@ html, body {
 .name{
     margin: 0;
     padding: 0;
-
+}
+.tabVisible{
+    visibility: visible;
+    opacity:1;
+    filter:alpha(opacity=1);
+}
+.tabHidden{
+    visibility: visible;
+    opacity:0;
+    filter:alpha(opacity=0);
 }
